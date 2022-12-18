@@ -30,5 +30,5 @@ app.post('/send-notic', async function (req, res) {
   }
 });
 
-app.listen(9009);
-console.log('Server is listening on port http://localhost:9009');
+app.listen(3000);
+console.log('Server is listening on port http://localhost:3000');
