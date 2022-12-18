@@ -50,25 +50,32 @@
   });
 
   function php_email_form_submit(thisForm, action, formData) {
+    let formDataObject = Object.fromEntries(formData.entries());
+  // Format the plain form data as JSON
+  let formDataJsonString = JSON.stringify(formDataObject);
+
     fetch(action, {
       method: 'POST',
-      body: formData,
-      headers: {'X-Requested-With': 'XMLHttpRequest'}
+      body: formDataJsonString,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     })
     .then(response => {
-      return response.text();
+      return response.json();
     })
-    .then(data => {
+      .then(data => {
       thisForm.querySelector('.loading').classList.remove('d-block');
-      if (data.trim() == 'OK') {
+      if (data.status) {
         thisForm.querySelector('.sent-message').classList.add('d-block');
         thisForm.reset(); 
       } else {
-        throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
+        throw new Error(data ? data : 'Form submission failed and no error message returned from: '); 
       }
     })
-    .catch((error) => {
-      displayError(thisForm, error);
+      .catch((error) => {
+        displayError(thisForm, 'Form submission failed');
     });
   }
 
