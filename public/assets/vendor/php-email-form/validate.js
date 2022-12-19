@@ -28,19 +28,21 @@
       let formData = new FormData( thisForm );
 
       if ( recaptcha ) {
-        if(typeof grecaptcha !== "undefined" ) {
-          grecaptcha.ready(function() {
-            try {
-              grecaptcha.execute(recaptcha, {action: 'php_email_form_submit'})
-              .then(token => {
-                formData.set('recaptcha-response', token);
-                console.log('captcha')
-                //php_email_form_submit(thisForm, action, formData);
-              })
-            } catch(error) {
-              displayError(thisForm, error)
-            }
-          });
+        if (recaptcha.length !== 0) {
+          console.log('captcha')
+          // php_email_form_submit(thisForm, action, formData);
+          // grecaptcha.ready(function() {
+          //   try {
+          //     grecaptcha.execute(recaptcha, {action: 'php_email_form_submit'})
+          //     .then(token => {
+          //       formData.set('recaptcha-response', token);
+          //       console.log('captcha')
+          //       //php_email_form_submit(thisForm, action, formData);
+          //     })
+          //   } catch(error) {
+          //     displayError(thisForm, error)
+          //   }
+          // });
         } else {
           displayError(thisForm, 'The reCaptcha javascript API url is not loaded!')
         }
