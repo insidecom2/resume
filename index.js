@@ -40,17 +40,18 @@ app.post('/send-notic',
     const secretKey = '6Ldlbo4jAAAAAOMX2yDqqL-tevF-L1AQfBJk_Shr';
     const responseKey = req.body.recaptcha_response;
 
-   await axios.get(`${endPoint}?secret=${secretKey}&response=${responseKey}`)
-     .then(function (response) {
-       if (!response.success) {
-        return res.json({ status: false , error:response })
+    var response = await axios.get(endPoint, {
+      params: {
+        secret: secretKey,
+        response: responseKey
       }
-    })
-    .catch(function (error) {
-      // handle error
-      return res.json({ status: false , message:error })
-    })
-    
+    });
+    const result = response.data;
+
+    if (!result.success) {
+      return res.json({ status: false })
+    }
+
     try {
       const response = await notic.sendNotic(req.body)
       res.json(response)
@@ -58,6 +59,7 @@ app.post('/send-notic',
     } catch (error) {
       res.json({ status: false })
     }
+
   });
 
 app.listen(3000);
