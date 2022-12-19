@@ -7,8 +7,7 @@
   "use strict";
 
   let forms = document.querySelectorAll('.php-email-form');
-  var recaptcha = grecaptcha.getResponse();
-  
+
   forms.forEach( function(e) {
     e.addEventListener('submit', function(event) {
       event.preventDefault();
@@ -17,7 +16,8 @@
 
       let action = thisForm.getAttribute('action');
       // let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
-     
+      var recaptcha = grecaptcha.getResponse();
+
       if( ! action ) {
         displayError(thisForm, 'The form action property is not set!')
         return;
@@ -28,7 +28,7 @@
 
       let formData = new FormData( thisForm );
       console.log('>>>>>',recaptcha);
-      if ( recaptcha ) {
+      // if ( recaptcha ) {
         if (recaptcha.length !== 0) {
           console.log('captcha')
           // php_email_form_submit(thisForm, action, formData);
@@ -45,12 +45,12 @@
           //   }
           // });
         } else {
-          displayError(thisForm, 'The reCaptcha javascript API url is not loaded!')
+          displayError(thisForm, 'The reCaptcha invalid')
         }
-      } else {
-        console.log('no captcha')
+      // } else {
+      //   console.log('no captcha')
         //php_email_form_submit(thisForm, action, formData);
-      }
+      // }
     });
   });
 
