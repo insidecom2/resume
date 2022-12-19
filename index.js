@@ -2,6 +2,7 @@ const notic = require("./service/sendnotic");
 require('dotenv').config()
 var express = require('express');
 var bodyParser = require('body-parser')
+const axios = require('axios');
 const { body, validationResult } = require('express-validator');
 
 var app = express();
@@ -27,12 +28,28 @@ app.post('/send-notic',
   body('name').isLength({ min: 1 }),
   body('subject').isLength({ min: 1 }),
   body('message').isLength({ min: 1 }),
+  body('recaptcha-response').isLength({ min: 1 }),
   async function (req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
+    /// check google reCaptcha ///
+    const endPoint = 'https://www.google.com/recaptcha/api/siteverify';
+    const secretKey = '6Ldlbo4jAAAAAOMX2yDqqL-tevF-L1AQfBJk_Shr';
+    const responseKey = req.body['recaptcha-response'];
+
+   await axios.get(`${endPoint}?secret=${secretKey}&response=${responseKey}`)
+     .then(function (response) {
+      
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+      res.json({ status: false , message:error })
+    })
+    
     try {
       const response = await notic.sendNotic(req.body)
       res.json(response)
