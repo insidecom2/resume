@@ -8,8 +8,8 @@
 
   let forms = document.querySelectorAll('.php-email-form');
 
-  forms.forEach( function(e) {
-    e.addEventListener('submit', function(event) {
+  forms.forEach(function (e) {
+    e.addEventListener('submit', function (event) {
       event.preventDefault();
 
       let thisForm = this;
@@ -18,7 +18,7 @@
       // let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
       var recaptcha = grecaptcha.getResponse();
 
-      if( ! action ) {
+      if (!action) {
         displayError(thisForm, 'The form action property is not set!')
         return;
       }
@@ -26,38 +26,21 @@
       thisForm.querySelector('.error-message').classList.remove('d-block');
       thisForm.querySelector('.sent-message').classList.remove('d-block');
 
-      let formData = new FormData( thisForm );
-      console.log('>>>>>',recaptcha);
-      // if ( recaptcha ) {
-        if (recaptcha.length !== 0) {
-          console.log('captcha')
-          // php_email_form_submit(thisForm, action, formData);
-          // grecaptcha.ready(function() {
-          //   try {
-          //     grecaptcha.execute(recaptcha, {action: 'php_email_form_submit'})
-          //     .then(token => {
-          //       formData.set('recaptcha-response', token);
-          //       console.log('captcha')
-          //       //php_email_form_submit(thisForm, action, formData);
-          //     })
-          //   } catch(error) {
-          //     displayError(thisForm, error)
-          //   }
-          // });
-        } else {
-          displayError(thisForm, 'The reCaptcha invalid')
-        }
-      // } else {
-      //   console.log('no captcha')
-        //php_email_form_submit(thisForm, action, formData);
-      // }
+      let formData = new FormData(thisForm);
+
+      if (recaptcha.length !== 0) {
+        formData.set('recaptcha-response', recaptcha);
+        php_email_form_submit(thisForm, action, formData);
+      } else {
+        displayError(thisForm, 'The reCaptcha invalid')
+      }
     });
   });
 
   function php_email_form_submit(thisForm, action, formData) {
     let formDataObject = Object.fromEntries(formData.entries());
-  // Format the plain form data as JSON
-  let formDataJsonString = JSON.stringify(formDataObject);
+    // Format the plain form data as JSON
+    let formDataJsonString = JSON.stringify(formDataObject);
 
     fetch(action, {
       method: 'POST',
@@ -67,21 +50,21 @@
         Accept: "application/json",
       },
     })
-    .then(response => {
-      return response.json();
-    })
+      .then(response => {
+        return response.json();
+      })
       .then(data => {
-      thisForm.querySelector('.loading').classList.remove('d-block');
-      if (data.status) {
-        thisForm.querySelector('.sent-message').classList.add('d-block');
-        thisForm.reset(); 
-      } else {
-        throw new Error(data ? data : 'Form submission failed and no error message returned from: '); 
-      }
-    })
+        thisForm.querySelector('.loading').classList.remove('d-block');
+        if (data.status) {
+          thisForm.querySelector('.sent-message').classList.add('d-block');
+          thisForm.reset();
+        } else {
+          throw new Error(data ? data : 'Form submission failed and no error message returned from: ');
+        }
+      })
       .catch((error) => {
         displayError(thisForm, 'Form submission failed');
-    });
+      });
   }
 
   function displayError(thisForm, error) {
