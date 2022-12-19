@@ -42,6 +42,7 @@ app.post('/send-notic',
 
    await axios.get(`${endPoint}?secret=${secretKey}&response=${responseKey}`)
      .then(function (response) {
+       console.log(response);
        if (!response.success) {
         return res.json({ status: false })
       }
