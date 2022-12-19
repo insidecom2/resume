@@ -1,5 +1,5 @@
 const notic = require("./service/sendnotic");
-
+require('dotenv').config()
 var express = require('express');
 var bodyParser = require('body-parser')
 
@@ -15,8 +15,9 @@ app.use(express.static(__dirname + '/public'));
 // use res.render to load up an ejs view file
 
 // index page
-app.get('/', function(req, res) {
-  res.render('pages/index');
+app.get('/', function (req, res) {
+  const endPoint = process.env.END_POINT;
+  res.render('pages/index', {endPoint: endPoint});
 });
 
 // about page
