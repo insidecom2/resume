@@ -29,7 +29,7 @@
       let formData = new FormData(thisForm);
 
       if (recaptcha.length !== 0) {
-        formData.set('recaptcha-response', recaptcha);
+        formData.set('recaptcha_response', recaptcha);
         php_email_form_submit(thisForm, action, formData);
       } else {
         displayError(thisForm, 'The reCaptcha invalid')

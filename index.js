@@ -28,7 +28,7 @@ app.post('/send-notic',
   body('name').isLength({ min: 1 }),
   body('subject').isLength({ min: 1 }),
   body('message').isLength({ min: 1 }),
-  body('recaptcha-response').isLength({ min: 1 }),
+  body('recaptcha_response').isLength({ min: 1 }),
   async function (req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -38,7 +38,7 @@ app.post('/send-notic',
     /// check google reCaptcha ///
     const endPoint = 'https://www.google.com/recaptcha/api/siteverify';
     const secretKey = '6Ldlbo4jAAAAAOMX2yDqqL-tevF-L1AQfBJk_Shr';
-    const responseKey = req.body['recaptcha-response'];
+    const responseKey = req.body.recaptcha_response;
 
    await axios.get(`${endPoint}?secret=${secretKey}&response=${responseKey}`)
      .then(function (response) {
@@ -48,7 +48,6 @@ app.post('/send-notic',
     })
     .catch(function (error) {
       // handle error
-      console.log(error);
       return res.json({ status: false , message:error })
     })
     
