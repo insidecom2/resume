@@ -7,7 +7,8 @@
   "use strict";
 
   let forms = document.querySelectorAll('.php-email-form');
-
+  var recaptcha = grecaptcha.getResponse();
+  
   forms.forEach( function(e) {
     e.addEventListener('submit', function(event) {
       event.preventDefault();
@@ -16,7 +17,7 @@
 
       let action = thisForm.getAttribute('action');
       // let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
-      var recaptcha = grecaptcha.getResponse();
+     
       if( ! action ) {
         displayError(thisForm, 'The form action property is not set!')
         return;
