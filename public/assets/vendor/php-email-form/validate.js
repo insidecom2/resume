@@ -26,7 +26,7 @@
       thisForm.querySelector('.sent-message').classList.remove('d-block');
 
       let formData = new FormData( thisForm );
-
+      console.log('>>>>>',recaptcha);
       if ( recaptcha ) {
         if (recaptcha.length !== 0) {
           console.log('captcha')
