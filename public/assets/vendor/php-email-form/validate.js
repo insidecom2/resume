@@ -34,6 +34,8 @@
       } else {
         displayError(thisForm, 'The reCaptcha invalid')
       }
+      
+      grecaptcha.reset();
     });
   });
 

@@ -42,12 +42,14 @@ app.post('/send-notic',
 
    await axios.get(`${endPoint}?secret=${secretKey}&response=${responseKey}`)
      .then(function (response) {
-      
+       if (!response.success) {
+        return res.json({ status: false })
+      }
     })
     .catch(function (error) {
       // handle error
       console.log(error);
-      res.json({ status: false , message:error })
+      return res.json({ status: false , message:error })
     })
     
     try {
