@@ -18,8 +18,7 @@ app.use(express.static(__dirname + '/public'));
 
 // index page
 app.get('/', function (req, res) {
-  const endPoint = process.env.END_POINT;
-  res.render('pages/index', { endPoint: endPoint });
+  res.render('pages/index');
 });
 
 // about page
