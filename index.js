@@ -1,4 +1,5 @@
 const notic = require("./service/sendnotic");
+const captcha = require("./service/captcha");
 require('dotenv').config()
 var express = require('express');
 var bodyParser = require('body-parser')
@@ -33,21 +34,11 @@ app.post('/send-notic',
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    
+    // check google captcha
+    const isPassGoogleCaptcha = captcha.checkGoogleCaptcha(req.body.recaptcha_response);
 
-    /// check google reCaptcha ///
-    const endPoint = 'https://www.google.com/recaptcha/api/siteverify';
-    const secretKey = '6Ldlbo4jAAAAAOMX2yDqqL-tevF-L1AQfBJk_Shr';
-    const responseKey = req.body.recaptcha_response;
-
-    var response = await axios.get(endPoint, {
-      params: {
-        secret: secretKey,
-        response: responseKey
-      }
-    });
-    const result = response.data;
-
-    if (!result.success) {
+    if (!isPassGoogleCaptcha) {
       return res.json({ status: false })
     }
 
@@ -60,6 +51,7 @@ app.post('/send-notic',
     }
 
   });
+
 
 app.listen(3000);
 console.log('Server is listening on port http://localhost:3000');
