@@ -1,3 +1,4 @@
+require('dotenv').config()
 const checkGoogleCaptcha = async (reCaptchaCode) => {
     const endPoint = 'https://www.google.com/recaptcha/api/siteverify';
     const secretKey = process.env.GOOGLE_CAPTCHA;
