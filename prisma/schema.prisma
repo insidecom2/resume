@@ -1,0 +1,21 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+ 
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Author {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  Quotes Quote[]
+}
+ 
+model Quote {
+  id       Int    @id @default(autoincrement())
+  quote    String @unique
+  author   Author @relation(fields: [authorId], references: [id])
+  authorId Int
+}
