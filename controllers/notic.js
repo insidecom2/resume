@@ -29,7 +29,6 @@ const sendNotic = async (req, res) => {
 
     try {
         const response = await notic.sendNotic(req.body)
-        await saveNotify(req.body);
         return res.json(response)
 
     } catch (error) {
