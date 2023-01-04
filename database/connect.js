@@ -13,8 +13,16 @@ async function query(sql, params) {
     const [results, ] = await connection.execute(sql, params);
     connection.end();
     return results;
-  }
-  
+}
+
+function fetch(rows) {
+    if (!rows) {
+      return [];
+    }
+    return rows;
+}
+
   module.exports = {
-    query 
+      query,
+      fetch
   }
