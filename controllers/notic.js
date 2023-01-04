@@ -1,18 +1,13 @@
 const notic = require("../service/sendnotic");
 const captcha = require("../service/captcha");
-const { PrismaClient } = require('@prisma/client')
+const conn = require('../database/connect');
 
 const saveNotify = async (body) => {
-    const prisma = new PrismaClient()
-    const newNotic = await prisma.notify.create({
-        data: {
-            name: body.name,
-            email: body.email,
-            subject: body.subject,
-            message: body.message
-        },
-    })
-    return newNotic;
+    await conn.query(`INSERT INTO Notify SET name='${body.name}', 
+        email='${body.email}', 
+        subject='${body.subject}', 
+        message='${body.message}'`);
+  
 }
 
 function listNotify(req, res) {
@@ -28,11 +23,12 @@ const sendNotic = async (req, res) => {
     }
 
     try {
+        await saveNotify(req.body);
         const response = await notic.sendNotic(req.body)
         return res.json(response)
 
     } catch (error) {
-        return res.json({ status: false , message: error})
+        return res.json({ status: false , message: error.message})
     }
 }
 
