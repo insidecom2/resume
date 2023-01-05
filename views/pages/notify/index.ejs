@@ -1,0 +1,15 @@
+<p>Page :<%= page %></p>
+<% if(locals.datas) { %>
+<ul>
+    <% datas.forEach(function(data) { %>
+      <li>
+        <p>Name : <%= data.name %></p>
+        <p>Email : <%= data.email %></p>
+        <p>Subject : <%= data.subject %></p>
+        <p>Message : <%= data.message %></p>
+      </li>
+    <% }); %>
+  </ul>
+  <% }%>
+
+  <p><a href="/api/logout">logout</a></p>
