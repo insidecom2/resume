@@ -1,0 +1,18 @@
+<%- include('../theme/header.ejs', { title: 'Notify lists' })%>
+  <%- include('../theme/nav.ejs', { menu: 'Notify' })%>
+  <div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card p-3">
+                <a href="javascript:window.history.back(-1)">
+                    <span class="badge bg-info text-dark">< back</span>
+                </a>
+                <h4 class="py-2">Notify View</h4>
+                <p>Full name : <%= datas.name%></p>
+                <p>Email : <%= datas.email%></p>
+                <p>Subject : <%= datas.subject%></p>
+                <p>Message : <%= datas.message%></p>
+            </div>
+        </div>
+    </div>
+  </div>

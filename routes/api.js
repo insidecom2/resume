@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const notic = require('../controllers/notic')
 const { createAdmin } = require('../controllers/auth')
+const { deleteNotify } = require('../controllers/notic')
+const { checkApiAuthenticated } = require('../middleware/middleware')
 
 require('dotenv').config()
 
@@ -40,4 +42,15 @@ router.get('/logout', (req, res) => {
     });
 })
 
+/**
+ * Notify
+ */
+router.delete('/notify/:id', checkApiAuthenticated, async (req, res) => {
+    const id = req.params.id;
+    const result = await deleteNotify(req.params.id);
+    if (typeof result === 'string') {
+        return res.status(400).json({ status: false, message: result})
+    }
+    res.status(200).json({ status: true, message: 'deleted'})
+})
 module.exports = router;

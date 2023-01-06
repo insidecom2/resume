@@ -16,6 +16,19 @@ const saveNotify = async (body) => {
 }
 
 /**
+ * id
+ * @param {*} id 
+ * @returns 
+ */
+const deleteNotify = async (id) => {
+    try {
+        return await conn.query(`DELETE FROM Notify WHERE id='${id}'`);
+    } catch (error) {
+        return error
+    }
+}
+
+/**
  * listNotify
  * @param {*} page 
  * @param {*} limit 
@@ -34,6 +47,11 @@ const listNotify = async (page, limit = 10) => {
         console.log('error',error);
         return null;
     }
+}
+
+const getNotify = async (id) => {
+    const result = await conn.query(`SELECT * FROM Notify WHERE id =${id} `);
+    return conn.fetch(result);
 }
 
 /**
@@ -60,4 +78,4 @@ const sendNotic = async (req, res) => {
     }
 }
 
-module.exports = { saveNotify, listNotify, sendNotic };
+module.exports = { saveNotify, listNotify, sendNotic, getNotify, deleteNotify};
