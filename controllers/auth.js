@@ -23,8 +23,8 @@ const createAdmin = async (req, res) => {
         password: hasPassword
     })
 
-    if (!create) {
-        return res.status(400).json({ status: false, message: 'Cannot create Admin' });
+    if (!Array.isArray(create)) {
+        return res.status(400).json({ status: false, message: create });
     }
 
     return res.status(200).json({ status: true, message: 'Created Admin' });

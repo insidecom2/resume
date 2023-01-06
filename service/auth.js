@@ -9,7 +9,7 @@ const createUser = async (body) => {
         const resultData = await userModel.listUsersAll();
         
         if (resultData.length > 0) {
-            return null
+            return 'Duplicate data'
         }
     
         return await userModel.createUser({
@@ -21,7 +21,7 @@ const createUser = async (body) => {
         
     } catch (error) {
         console.log(error)
-        return null;
+        return error;
     }
 }
 
