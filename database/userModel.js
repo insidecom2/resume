@@ -5,7 +5,7 @@ const createUser = async (body) => {
         const { fullName, role, email, password } = body;
         return await conn.query(`INSERT INTO User SET full_name='${fullName}', role='${role}', email= '${email}', password= '${password}'`);
     } catch (error) {
-        return [];
+        return null;
     }
 }
 
