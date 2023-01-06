@@ -20,7 +20,7 @@ app.use(flash());
 app.use(session({
     secret: 'resume',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: { maxAge: 60 * 60 * 1000 } // 1 hour
 }));
 app.use(passport.initialize());

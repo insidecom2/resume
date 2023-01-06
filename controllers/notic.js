@@ -24,8 +24,12 @@ const saveNotify = async (body) => {
 const listNotify = async (page, limit = 10) => {
     try {
         const start = (page * limit) - limit;
+        const resultAll = await conn.query(`SELECT * FROM Notify ORDER BY id DESC `);
         const result = await conn.query(`SELECT * FROM Notify ORDER BY id DESC LIMIT ${start},${limit} `);
-        return conn.fetch(result);        
+        return {
+            datas: conn.fetch(result),
+            pageAll: Math.ceil(resultAll.length / limit)
+        };
     } catch (error) {
         console.log('error',error);
         return null;

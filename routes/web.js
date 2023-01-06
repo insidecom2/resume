@@ -16,8 +16,8 @@ router.get('/backoffice/login',checkUnAuthenticated, login);
 
 router.get('/backoffice/notify',checkAuthenticated, async function (req, res) {
     const page = 1;
-    const datas = await notic.listNotify(page);
-    res.render('pages/notify', {page: page , datas:datas});
+    const result = await notic.listNotify(page);
+    res.render('pages/notify', {page: page ,  datas:result});
 });
 
 router.get('/backoffice/notify/:page',checkAuthenticated, async function (req, res) {

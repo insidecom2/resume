@@ -1,0 +1,12 @@
+.rounded-border {
+    border-radius: 15px !important;
+}
+
+.nav-link.active {
+    color:black;
+}
+
+button, input{
+    border-radius: 15px !important;
+    padding: 5px 20px !important;
+}

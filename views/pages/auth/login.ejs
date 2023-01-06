@@ -1,13 +1,27 @@
-<h1>Login </h1>
-<p>
-<% if(messages.error) { %>
-    <%= messages.error %>
-<% }%>
-</p>
-<form action="/api/login" method="post">
-<p>Email</p>
-<input type="text" name="email" id="email">
-<p>Password</p>
-<input type="password" name="password" id="password">
-<p><input type="submit" value="submit"></p>
-</form>
+<%- include('../theme/header.ejs', { title: 'Login' })%>
+    <div class="container">
+        <div class="row g-2 my-5">
+            <div class="col-md-6 mx-auto bg-light p-3 rounded-border">
+                <h1>Login </h1>
+                <p>
+                    <% if(messages.error) { %>
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                                <use xlink:href="#exclamation-triangle-fill" />
+                            </svg>
+                            <div>
+                                <%= messages.error %>
+                            </div>
+                        </div>
+                        <% }%>
+                </p>
+                <form action="/api/login" method="post">
+                    <p class="pt-3">Email</p>
+                    <input type="text" name="email" id="email" class="form-control">
+                    <p class="pt-3">Password</p>
+                    <input type="password" name="password" id="password" class="form-control">
+                    <p class="pt-3"><button type="submit" class="btn btn-outline-secondary">Login</button></p>
+                </form>
+            </div>
+        </div>
+    </div>
